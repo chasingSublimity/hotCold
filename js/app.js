@@ -1,18 +1,19 @@
 
 $(document).ready(function(){
 
-	/* Random Integer Function */
+	/* Random Integer */
 	function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 	};
 
-	/* Comparison Function */
+	/* Comparison */
 	function compareNumbers(number1, number2) {
 		var difference = Math.abs(number1 - number2);
 
 		/* Error Handling */
 		if (number1 < 1 || number1 > 100 || isNaN(number1) === true) {
 			alert("Invalid Input: Please enter a number larger than 1 and less than 100.");
+
 		} else if (difference >= 50) {
 			$("#feedback").text("cold");
 			trackGuess();
@@ -22,11 +23,22 @@ $(document).ready(function(){
 		} else if (difference >= 10) {
 			$("#feedback").text("hot");
 			trackGuess();
+		} else if (difference >= 5) {
+			$("#feedback").text("extremely hot");
+			trackGuess();
 		} else if (difference === 0) {
 			$("#feedback").text("You Won. Click new game to play again");
 			$("#guessButton").css('opacity','0');
 		};
 	};
+
+	/* Increase Guess Count  */
+	var guessCount = 0
+	function increaseGuessCount() {
+		guessCount = guessCount + 1
+		$("#count").text(guessCount);
+	}
+	
 
 	/* Guess Tracking Function */
 	function trackGuess() {
@@ -56,6 +68,8 @@ $(document).ready(function(){
 
   	/* On Guess Button Click */
   	$("form").submit(function(event){
+  		var guessCount = 0
+  		increaseGuessCount();
   		event.preventDefault();
   		var guess = parseInt($("#userGuess").val());
   		compareNumbers(guess, randomInt);
